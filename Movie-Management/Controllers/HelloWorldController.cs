@@ -24,6 +24,7 @@ namespace Movie_Management.Controllers
 
             // Use HtmlEncoder.Default.Encode to protect the app from malicious input (such as through JavaScript).
             return HtmlEncoder.Default.Encode($"Hello {name}, ID: {id}");
+
         }
     }
 }
