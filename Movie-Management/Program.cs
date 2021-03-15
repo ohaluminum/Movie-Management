@@ -22,5 +22,6 @@ namespace Movie_Management
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
