@@ -9,22 +9,23 @@ namespace Movie_Management.Controllers
 {
     public class HelloWorldController : Controller
     {
-        // GET: /HelloWorld/
+        // ------------------------------------------- GET: /HelloWorld/ -------------------------------------------------
 
-        public string Index()
+        public IActionResult Index()
         {
-            return "This is my default action...";
+            return View();
         }
 
-        // GET: /HelloWorld/Welcome/ 
 
-        public string Welcome(string name, int id = 1)
+        // ------------------------------------------- GET: /HelloWorld/Welcome/ ----------------------------------------- 
+
+        public IActionResult Welcome(string name, int id = 1)
         {
-            // NOTE: The simple way to return string: return $"Hello {name}, ID is: {id}";
+            //The ViewData dictionary object contains data that will be passed to the view.
+            ViewData["Message"] = "Hello " + name;
+            ViewData["NumTimes"] = id;
 
-            // Use HtmlEncoder.Default.Encode to protect the app from malicious input (such as through JavaScript).
-            return HtmlEncoder.Default.Encode($"Hello {name}, ID: {id}");
-
+            return View();
         }
     }
 }
