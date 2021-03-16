@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movie_Management
+namespace MovieManagement
 {
     public class Program
     {
@@ -22,6 +22,5 @@ namespace Movie_Management
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
 }

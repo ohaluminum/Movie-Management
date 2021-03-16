@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Movie_Management.Controllers
+namespace MovieManagement.Controllers
 {
     public class HelloWorldController : Controller
     {
-        // ------------------------------------------- GET: /HelloWorld/ -------------------------------------------------
+        // GET: HelloWorld
 
         public IActionResult Index()
         {
@@ -17,11 +17,11 @@ namespace Movie_Management.Controllers
         }
 
 
-        // ------------------------------------------- GET: /HelloWorld/Welcome/ ----------------------------------------- 
+        // GET: HelloWorld/Welcome 
 
         public IActionResult Welcome(string name, int id = 1)
         {
-            //The ViewData dictionary object contains data that will be passed to the view.
+            // The ViewData dictionary object contains data that will be passed to the view.
             ViewData["Message"] = "Hello " + name;
             ViewData["NumTimes"] = id;
 

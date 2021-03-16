@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieManagement.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movie_Management
+namespace MovieManagement
 {
     public class Startup
     {
@@ -24,6 +26,8 @@ namespace Movie_Management
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<MovieManagementDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MovieManagementDBContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
