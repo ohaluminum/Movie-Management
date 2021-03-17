@@ -25,12 +25,15 @@ namespace MovieManagement.Controllers
         }
 
         // GET: Movies
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
+            // NOTE: Asynchronous Programming with async and await - https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
             return View(await _context.Movie.ToListAsync());
         }
 
         // GET: Movies/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)       // ?: Nullable Type
         {
             if (id == null)
@@ -52,8 +55,10 @@ namespace MovieManagement.Controllers
         }
 
         // GET: Movies/Create
+        [HttpGet]
         public IActionResult Create()
         {
+            // ViewResult object must implement the IActionResult interface.
             return View();
         }
 
@@ -64,16 +69,23 @@ namespace MovieManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
         {
+            // If the data state is valid, the data will be created.
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
+
+                // The new movie data is saved to the database by calling the SaveChangesAsync method of database context.
                 await _context.SaveChangesAsync();
+
+                // Redirect the user to the Index action: displays the movie collection.
                 return RedirectToAction(nameof(Index));
             }
+
             return View(movie);
         }
 
         // GET: Movies/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,10 +94,12 @@ namespace MovieManagement.Controllers
             }
 
             var movie = await _context.Movie.FindAsync(id);
+
             if (movie == null)
             {
                 return NotFound();
             }
+
             return View(movie);
         }
 
@@ -96,16 +110,21 @@ namespace MovieManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
         {
+            // The [Bind] attribute is one way to protect against over-posting: You should only include properties in the [Bind] attribute that you want to change.
+
             if (id != movie.Id)
             {
                 return NotFound();
             }
 
+            // If the data state is valid, the data will be updated.
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(movie);
+
+                    // The updated movie data is saved to the database by calling the SaveChangesAsync method of database context.
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -119,12 +138,16 @@ namespace MovieManagement.Controllers
                         throw;
                     }
                 }
+
+                // Redirect the user to the Index action: displays the movie collection.
                 return RedirectToAction(nameof(Index));
             }
+
             return View(movie);
         }
 
         // GET: Movies/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,8 +155,8 @@ namespace MovieManagement.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
             {
                 return NotFound();

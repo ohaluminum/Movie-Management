@@ -20,6 +20,7 @@ namespace MovieManagement.Models
                     return;   // DB has been seeded
                 }
 
+                // Dummy Data
                 context.Movie.AddRange(
                     new Movie
                     {
