@@ -26,5 +26,10 @@ namespace MovieManagement.Models.DataModels
         [DataType(DataType.Currency)]       // Display in currency format
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string Rating { get; set; }
+
     }
 }
