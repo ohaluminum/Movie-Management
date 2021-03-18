@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MovieManagement.Models.ViewModels;
 using MovieManagement.Data;
-using MovieManagement.Models;
+using MovieManagement.Models.DataModels;
 
 namespace MovieManagement.Controllers
 {
@@ -26,10 +27,39 @@ namespace MovieManagement.Controllers
 
         // GET: Movies
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string selectedGenre, string searchString)
         {
-            // NOTE: Asynchronous Programming with async and await - https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
-            return View(await _context.Movie.ToListAsync());
+            // Language-Integrated Query (LINQ): select list of genres from database.
+            var genres = from m in _context.Movie
+                         orderby m.Genre
+                         select m.Genre;
+
+            // Language-Integrated Query (LINQ): select list of movies from database.
+            var movies = from m in _context.Movie
+                         select m;
+
+            // Filter by movie title.
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(m => m.Title.Contains(searchString));
+            }
+
+            // Filter by movie genre.
+            if (!String.IsNullOrEmpty(selectedGenre))
+            {
+                movies = movies.Where(m => m.Genre == selectedGenre);
+            }
+
+            var movieVM = new MovieViewModel
+            {
+                // NOTE: Asynchronous Programming with async and await - https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
+                Genres = new SelectList(await genres.Distinct().ToListAsync()),
+                Movies = await movies.ToListAsync(),
+                SelectedGenre = selectedGenre,
+                SearchString = searchString
+            };
+
+            return View(movieVM);
         }
 
         // GET: Movies/Details/5
