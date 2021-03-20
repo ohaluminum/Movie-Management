@@ -197,9 +197,9 @@ namespace MovieManagement.Controllers
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id, bool notUsed)   // This bool parameter is the extra (unused) parameter: differenciate two Delete methods (GET and POST).
         {
             var movie = await _context.Movie.FindAsync(id);
             _context.Movie.Remove(movie);
