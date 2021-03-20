@@ -35,6 +35,5 @@ namespace MovieManagement.Models.DataModels
         [StringLength(5, ErrorMessage = "Rating field length limit is 5 characters.")]
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]      // 1. The first letter is required to be uppercase. 2. Allows some special characters (double quotation mark["], single quotation mark['], whitespace[ ], minus sign[-]) and numbers in subsequent spaces.
         public string Rating { get; set; }
-
     }
 }
