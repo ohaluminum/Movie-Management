@@ -99,9 +99,10 @@ namespace MovieManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
-            // If the data state is valid, the data will be created.
+            // ModelState.IsValid is called to check whether the movie has any validation errors.
             if (ModelState.IsValid)
             {
+                // If the data state is valid, the data will be created.
                 _context.Add(movie);
 
                 // The new movie data is saved to the database by calling the SaveChangesAsync method of database context.
